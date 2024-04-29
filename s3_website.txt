@@ -1,0 +1,21 @@
+ pipeline {
+     agent any
+     stages {
+         stage('checkout') {
+             steps { git branch: 'main', url: 'https://github.com/KaterynaPugach/lab1.git'
+             }
+         }
+         stage('terraform action') {
+             steps {
+                 echo "Terraform action is --> ${action}"
+                 sh '''
+                 cd s3_website
+                 ls
+                 terraform init
+                 terraform plan
+                 terraform ${action} -auto-approve '''
+                 
+            }
+        }
+    }
+ }
